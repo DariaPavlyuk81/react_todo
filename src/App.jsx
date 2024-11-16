@@ -1,46 +1,47 @@
-// import './App.css'
-import { useState } from 'react';
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import './App.css';
+import React, { useState } from 'react';
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';//import AddTodoForm
 
 
 
-const App = () =>{
+const App = () => {
 
 
-const [todoList,setTodoList] = useState ([
-  {id: 1, title:"Complete Homework"},
-  {id:2,title:" Study New Lesson"},
-  {id:3,title:"Do Yoga"},
- ]);
+  const [todos, setTodos] = useState([
+    { id: 1, title: "Complete Homework" },
+    { id: 2, title: " Study New Lesson" },
+    { id: 3, title: "Do Yoga" },
+  ]);
 
- const addTodo = (title) =>{
-  const newTodo = {
-    id: todoList.length +1, 
-    title: title
+  const addTodo = (newTitle) => {
+    const newTodo = {
+      id: todos.length + 1,
+      title: newTitle,
+    };
+    setTodos([...todos, newTodo]);
   };
-  setTodoList([...todoList,newTodo]);
- };
-//function App() {
-  // const [count, setCount] = useState(0)
+  // //function App() {
+  //   // const [count, setCount] = useState(0)
+
+
+  // const App = () => {
+  //   const [newTodo,setNewTodo] = useState('');
 
   return (
     <div>
-    <h1>ToDo List</h1>
-    <AddTodoForm addTodo={addTodo}/>
-     <ul>
-      {todoList.map(todo => (
-        <li key={todo.id}>{todo.title}</li>
-      ))}
-    </ul> 
-    </div>
-    );
-      };
+      <h1>ToDo List</h1>
+      <AddTodoForm onAddTodo={addTodo} />
+      <TodoList todos={todos} />
 
-    
+
+    </div>
+  );
+};
+
+
 //       <div>
 //         <a href="https://vite.dev" target="_blank">
 //           <img src={viteLogo} className="logo" alt="Vite logo" />
