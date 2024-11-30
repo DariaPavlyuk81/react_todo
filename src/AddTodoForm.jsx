@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 
 const AddTodoForm = ({ onAddTodo }) => {
+    //new state varieble todoTitle, setTodoTitle
     const [todoTitle, setTodoTitle] = useState('');
 
+//handleTitleChange function
+const handleTitleChange =(event) => {
+    setTodoTitle(event.target.value);
+    // const newTodoTitle = event.target.value;
+    // setTodoTitle(newTodoTitle);
+};
 
-    const handleAddTodo = (event) => {
+//handleAddToDo function
+const handleAddTodo = (event) => {
         event.preventDefault();
-
-
-
-        if (todoTitle.trim()) {
-            onAddTodo(todoTitle);
-        }
+if (todoTitle.trim()) {
+    const newTodo = {
+        id: Date.now(),
+        title: todoTitle,
+    };
+            onAddTodo(newTodo);
         //clear value
         setTodoTitle('');
 
-
+}
     };
 
 
@@ -40,7 +48,7 @@ const AddTodoForm = ({ onAddTodo }) => {
                 id="todoTitle"
                 name="title"
                 value={todoTitle}
-                onChange={(e) => setTodoTitle(e.target.value)}
+                onChange={handleTitleChange}
                 placeholder="Enter todo title"
             />
             <button type="submit">Add Todo</button>
