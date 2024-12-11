@@ -1,31 +1,63 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';//import AddTodoForm
+import useSemiPersistentState from './hooks/useSemiPersistentState';
 
 
+
+// const App = () => {
+// const [todoList,setTodoList]=useState([]);
+
+// //load from local Storage
+// useEffect (() => {
+//   const savedTodoList = localStorage.getItem ('savedTodoList');
+//   if(savedTodoList){
+//     setTodoList(JSON.parse(savedTodoList));
+//   }
+// },[]);
+
+// const App = ()=> {
+//   const [todoList,setTodoList] = useState (() => {
+//     const savedTodoList = localStorage.getItem('savedTodoList');
+//     return savedTodoList ? JSON.parse(savedTodoList) : [];
+//   });
 
 const App = () => {
-const [todoList,setTodoList]=useState([]);
-
+  const [todoList,setTodoList] = useSemiPersistentState();
 //addToDo function
 const addTodo = (newTodo) => {
   setTodoList([...todoList,newTodo]);
   
-}
+};
+
+
+
+// //save todo list to localStorage
+// useEffect (() => {
+//   if (todoList.length >0){
+//     localStorage.setItem('savedTodoList', JSON.stringify(todoList));
+//   }
+// },[todoList]);
+
+// //addToDo function
+// const addTodo = (newTodo) => {
+//   setTodoList([...todoList,newTodo]);
+  
+// };
 // const handleAddToDo =(newTitle) => {
 //   const newTodo = { id: Date.now(), title:newTitle};
 //   setTodoList([...todoList,newTodo]);
 // };
 
 return(
-  <div>
+  <>
     <h1>ToDo List</h1>
     <AddTodoForm onAddTodo={addTodo}/>
     <TodoList todoList={todoList}/>
-  </div>
+  </>
 );
   };
 
