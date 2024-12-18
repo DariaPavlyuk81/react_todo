@@ -1,12 +1,8 @@
-import './App.css';
-import React, { useEffect, useState } from 'react';
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg';
-import TodoList from './TodoList';
-import AddTodoForm from './AddTodoForm';//import AddTodoForm
-import useSemiPersistentState from './hooks/useSemiPersistentState';
-
-
+import "./App.css";
+import React, { useEffect, useState } from "react";
+import TodoList from "./TodoList";
+import AddTodoForm from "./AddTodoForm"; //import AddTodoForm
+import useSemiPersistentState from "./hooks/useSemiPersistentState";
 
 // const App = () => {
 // const [todoList,setTodoList]=useState([]);
@@ -26,60 +22,60 @@ import useSemiPersistentState from './hooks/useSemiPersistentState';
 //   });
 
 const App = () => {
-  const [todoList,setTodoList] = useSemiPersistentState();
-//addToDo function
-const addTodo = (newTodo) => {
-  setTodoList([...todoList,newTodo]);
-  
-};
-
-
-
-// //save todo list to localStorage
-// useEffect (() => {
-//   if (todoList.length >0){
-//     localStorage.setItem('savedTodoList', JSON.stringify(todoList));
-//   }
-// },[todoList]);
-
-// //addToDo function
-// const addTodo = (newTodo) => {
-//   setTodoList([...todoList,newTodo]);
-  
-// };
-// const handleAddToDo =(newTitle) => {
-//   const newTodo = { id: Date.now(), title:newTitle};
-//   setTodoList([...todoList,newTodo]);
-// };
-
-return(
-  <>
-    <h1>ToDo List</h1>
-    <AddTodoForm onAddTodo={addTodo}/>
-    <TodoList todoList={todoList}/>
-  </>
-);
+  const [todoList, setTodoList] = useSemiPersistentState();
+  //addToDo function
+  const addTodo = (newTodo) => {
+    setTodoList([...todoList, newTodo]);
+  };
+  const removeTodo = (id) => {
+    const updatedTodoList = todoList.filter((todo) => todo.id !== id);
+    setTodoList(updatedTodoList);
   };
 
-  // const [todos, setTodos] = useState([
-  //   { id: 1, title: "Complete Homework" },
-  //   { id: 2, title: " Study New Lesson" },
-  //   { id: 3, title: "Do Yoga" },
-  // ]);
+  // //save todo list to localStorage
+  // useEffect (() => {
+  //   if (todoList.length >0){
+  //     localStorage.setItem('savedTodoList', JSON.stringify(todoList));
+  //   }
+  // },[todoList]);
 
-  // const addTodo = (newTitle) => {
-  //   const newTodo = {
-  //     id: todos.length + 1,
-  //     title: newTitle,
-  //   };
-  //   setTodos([...todos, newTodo]);
+  // //addToDo function
+  // const addTodo = (newTodo) => {
+  //   setTodoList([...todoList,newTodo]);
+
   // };
-  // //function App() {
-  //   // const [count, setCount] = useState(0)
+  // const handleAddToDo =(newTitle) => {
+  //   const newTodo = { id: Date.now(), title:newTitle};
+  //   setTodoList([...todoList,newTodo]);
+  // };
 
+  return (
+    <>
+      <h1>ToDo List</h1>
+      <AddTodoForm onAddTodo={addTodo} />
+      <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+    </>
+  );
+};
 
-  // const App = () => {
-  //   const [newTodo,setNewTodo] = useState('');
+// const [todos, setTodos] = useState([
+//   { id: 1, title: "Complete Homework" },
+//   { id: 2, title: " Study New Lesson" },
+//   { id: 3, title: "Do Yoga" },
+// ]);
+
+// const addTodo = (newTitle) => {
+//   const newTodo = {
+//     id: todos.length + 1,
+//     title: newTitle,
+//   };
+//   setTodos([...todos, newTodo]);
+// };
+// //function App() {
+//   // const [count, setCount] = useState(0)
+
+// const App = () => {
+//   const [newTodo,setNewTodo] = useState('');
 
 //   return (
 //     <div>
@@ -87,11 +83,9 @@ return(
 //       <AddTodoForm onAddTodo={addTodo} />
 //       <TodoList todos={todos} />
 
-
 //     </div>
 //   );
 // };
-
 
 //       <div>
 //         <a href="https://vite.dev" target="_blank">
@@ -117,4 +111,4 @@ return(
 //   )
 // }
 
-export default App
+export default App;
