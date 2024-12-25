@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import TodoListItem from './TodoListItem';
+import React, { useState } from "react";
+import TodoListItem from "./TodoListItem";
 
 // const TodoList = ({ todoList}) => {
 //     const [todos] = useState([
@@ -9,27 +9,26 @@ import TodoListItem from './TodoListItem';
 
 //     ]);
 
+const TodoList = ({ todoList, onRemoveTodo }) => {
+  return (
+    <div>
+      <h2> My ToDo List </h2>
 
-const TodoList = ({ todoList }) => {
-
-
-    return (
-        <div>
-            <h2> My ToDo List </h2>
-
-            {todoList.length === 0 ? (
-                <p> No ToDos Yet! Add some!</p>
-            ) : (
-                <ul>
-
-                    {todoList.map((todo) => (
-                        <TodoListItem key={todo.id} todo={todo} />
-                    ))}
-
-                </ul>
-            )}
-        </div>
-    );
+      {todoList.length === 0 ? (
+        <p> No ToDos Yet! Add some!</p>
+      ) : (
+        <ul>
+          {todoList.map((todo) => (
+            <TodoListItem
+              key={todo.id}
+              todo={todo}
+              onRemoveTodo={onRemoveTodo}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
 
 export default TodoList;
