@@ -2,10 +2,8 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm"; //import AddTodoForm
-import useSemiPersistentState from "./hooks/useSemiPersistentState";
 
-// const App = () => {
-// const [todoList,setTodoList]=useState([]);
+
 
 // //load from local Storage
 // useEffect (() => {
@@ -15,22 +13,78 @@ import useSemiPersistentState from "./hooks/useSemiPersistentState";
 //   }
 // },[]);
 
-// const App = ()=> {
+//  const App = ()=> {
 //   const [todoList,setTodoList] = useState (() => {
-//     const savedTodoList = localStorage.getItem('savedTodoList');
+//          const savedTodoList = localStorage.getItem('savedTodoList');
 //     return savedTodoList ? JSON.parse(savedTodoList) : [];
 //   });
 
+//   useEffect (() => {
+//     if (todoList.length >0) {
+//         localStorage.setItem('savedTodoList', JSON.stringify(todoList));
+//     }
+  
+//   },[todoList]);
+
+
 const App = () => {
-  const [todoList, setTodoList] = useSemiPersistentState();
-  //addToDo function
+  const [todoList,setTodoList] = useState([]);
+  const [isLoading,setIsLoading] = useState(true);
+
+  useEffect(()=> {
+    const fetchTodos = new Promise((resolve, reject) => {
+      setTimeout(()=> {
+        resolve({
+          data:{
+            todoList:[
+              {id: 1, title: "Complete Homework"},
+              {id: 2, title: "Study New Lesson"},
+              {id: 3, title: "Do Yoga"},
+            ],
+          },
+        });
+      }, 2000)
+    });
+    fetchTodos.then((result)=> {
+      setTodoList(result.data.todoList);
+      setIsLoading(false);
+    });
+  },[]);
+
+useEffect (() => {
+  if (!isLoading) {
+    localStorage.setItem("savedTodoList", JSON.stringify(todoList));
+  }
+}, [todoList, isLoading]);
+
+
+  //addToDo fun ction
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
   };
+
   const removeTodo = (id) => {
     const updatedTodoList = todoList.filter((todo) => todo.id !== id);
     setTodoList(updatedTodoList);
   };
+
+return (
+    <>
+      <h1>ToDo List</h1>
+      {/* Conditional loading message */}
+      {isLoading? (
+        <p>Loading...</p>
+      ):(
+        <>
+      <AddTodoForm onAddTodo={addTodo} />
+      <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+    </>
+      )}
+      </>
+  );
+};
+
+
 
   // //save todo list to localStorage
   // useEffect (() => {
@@ -49,15 +103,7 @@ const App = () => {
   //   setTodoList([...todoList,newTodo]);
   // };
 
-  return (
-    <>
-      <h1>ToDo List</h1>
-      <AddTodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-    </>
-  );
-};
-
+  
 // const [todos, setTodos] = useState([
 //   { id: 1, title: "Complete Homework" },
 //   { id: 2, title: " Study New Lesson" },
