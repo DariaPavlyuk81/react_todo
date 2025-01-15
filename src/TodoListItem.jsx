@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 // const TodoListItem = (props) => {
 //     const {todo} = props;
 //     return (
@@ -8,15 +8,22 @@ import React from "react";
 //     );
 // };
 
+
 const TodoListItem = ({ todo, onRemoveTodo }) => {
-  return (
-    <li>
-      {todo.title}
-      <button type="button" onClick={() => onRemoveTodo(todo.id)}>
-        Remove
-      </button>
-    </li>
-  );
+    return (
+        <li>
+            {todo.title} - {todo.task_time && `Time: ${todo.task_time}`}
+            <button
+            type = "button"
+            onClick={() =>{
+              console.log(todo.id);
+             onRemoveTodo(todo.id);
+            }}
+            >
+                Remove
+                </button>
+        </li>
+    );
 };
 
 export default TodoListItem;
