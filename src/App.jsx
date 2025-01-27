@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm"; //import AddTodoForm
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./Navbar";
+import Contact from "./Contact";
+import About from "./About";
 
 // VITE_AIRTABLE_PERSONAL_ACCESS_TOKEN=patCSzKXkXc2biEtB.bc67826c4495cfe2e189018261dc2ab69155c1bb0c14525a60c8126258723b0d
 // VITE_TABLE_NAME=tblnQ7ni1ciJrS3sH
@@ -60,22 +63,34 @@ const App = () => {
   const removeTodo = async (id) => {
     const apiUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${id}`;
 
-    const options = {
+    const response = await fetch(apiUrl, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
       },
-    };
-    try {
-      const response = await fetch(apiUrl, options);
-      if (!response.ok) {
-        throw new Error(`Error deleting todo: ${response.statusText}`);
-      }
+    });
+
+    if (response.ok) {
       setTodoList((prevList) => prevList.filter((todo) => todo.id !== id));
-    } catch (error) {
-      console.error("Error deleting todo:", error);
+    } else {
+      console.error("Failed to delete todo", response);
     }
   };
+  // try {
+  //   const response = await fetch(apiUrl, options);
+  //     if (!response.ok) {
+  //       throw new Error(`Error deleting todo: ${response.statusText}`);
+  //     }
+  //      setTodoList((prevList) => prevList.filter((todo) => todo.id !== id));
+  //     // setTodoList((prevList) => {
+  //     //   const updatedList = prevList.filter((todo) => todo.id !==id);
+  //     //   console.log ("Updated Todo List:", updatedList);
+  //     //   return updatedList;
+  //     // });
+  //   } catch (error) {
+  //     console.error("Error deleting todo:", error);
+  //   }
+  // };
 
   const addTodo = async (newTodo) => {
     if (!newTodo.title) {
@@ -102,6 +117,8 @@ const App = () => {
       }
 
       const data = await response.json();
+      // TodoList todoList={todoList} onRemoveTodo={removeTodo}
+      setTodoList((prevList) => prevList.filter((todo) => todo.id !== id));
 
       setTodoList((prevList) => [
         ...prevList,
@@ -130,24 +147,28 @@ const App = () => {
 
   return (
     <Router>
+      <Navbar />
       <Routes>
         {/* Define the Route for the root path*/}
         <Route
           path="/"
           element={
-            <div>
+            <div key={todoList.length}>
               <h1>ToDo List</h1>
               {/* Conditional loading message */}
               {isLoading ? (
                 <p>Loading...</p>
               ) : (
-                <TodoList todoList={todoList} on RemoveTodo={removeTodo} />
+                <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
               )}
               <AddTodoForm onAddTodo={addTodo} />
             </div>
           }
         />
-        {/*New Route for /new path with form to add Todo amd Time*/}
+        <Route path="/about" element={<About />} />
+        {/* <Route path="/contact" element={<div><h1>Contact</h1></div>}/> */}
+        <Route path="/contact" element={<Contact />} />
+        //{/*New Route for /new path with form to add Todo amd Time*/}
         <Route
           path="/new"
           element={

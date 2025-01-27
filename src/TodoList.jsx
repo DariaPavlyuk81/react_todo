@@ -30,6 +30,5 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
     </div>
   );
 };
-      
 
 export default TodoList;

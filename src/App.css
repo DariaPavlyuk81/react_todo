@@ -1,10 +1,22 @@
 body {
   font-family: "Arial", sans-serif;
-  background-color: azure;
+  background-color: rgb(198, 237, 237);
+  color: #333;
+  display: flex;
   margin: 0;
   padding: 0;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
 }
-
+h1,
+h2 {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
 h1 {
   text-align: center;
   color: #888;
@@ -14,6 +26,70 @@ h1 {
 h2 {
   text-align: center;
   color: cadetblue;
+}
+
+nav {
+  background-color: beige;
+  padding: 10px 20px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+}
+nav a:hover {
+  color: #ddd;
+}
+
+.container {
+  padding: 20px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="time"] {
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #388e3c;
 }
 
 #root {
@@ -36,6 +112,37 @@ h2 {
 
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* Mobile-first approach */
+.container {
+  padding: 15px;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+/* Tablet devices */
+@media (min-width: 768px) {
+  .container {
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+}
+
+/* Desktop devices */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1000px;
+  }
+
+  h1 {
+    font-size: 3.5em;
+  }
 }
 
 @keyframes logo-spin {
