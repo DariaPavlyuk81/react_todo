@@ -1,0 +1,49 @@
+/* About.css */
+
+/* Set background color and text alignment for the About page */
+.about-container {
+  background-color: #f4f4f9;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Style for the heading */
+.about-container h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+/* Style for paragraph text */
+.about-container p {
+  color: #555;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Style for the features list */
+.about-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.about-container ul li {
+  background-color: #ffffff;
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Optional: Style for small info text at the bottom */
+.about-container .info {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 20px;
+}
