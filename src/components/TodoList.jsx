@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TodoListItem from "./TodoListItem";
+import PropTypes from "prop-types";
 
 // const TodoList = ({ todoList}) => {
 //     const [todos] = useState([
@@ -12,7 +13,7 @@ import TodoListItem from "./TodoListItem";
 const TodoList = ({ todoList, onRemoveTodo }) => {
   return (
     <div>
-      <h2> My ToDo List </h2>
+      <h2> Daria's ToDo List </h2>
 
       {todoList.length === 0 ? (
         <p> No ToDos Yet! Add some!</p>
@@ -30,5 +31,9 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
     </div>
   );
 };
-
+ 
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+onDeleTodo: PropTypes.func.isRequired,
+};
 export default TodoList;

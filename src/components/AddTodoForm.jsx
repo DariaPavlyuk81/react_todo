@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import InputWithLabel from "./InputWithLabel";
+import PropTypes from 'prop-types';
+
 
 const AddTodoForm = ({ onAddTodo }) => {
   //new state varieble todoTitle, setTodoTitle
   const [todoTitle, setTodoTitle] = useState("");
 
+
+  
   //handleTitleChange function
   const handleTitleChange = (event) => {
     setTodoTitle(event.target.value);
@@ -54,4 +58,7 @@ const AddTodoForm = ({ onAddTodo }) => {
   );
 };
 
+AddTodoForm.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
+};
 export default AddTodoForm;
