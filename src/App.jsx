@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import TodoList from "./TodoList";
-import AddTodoForm from "./AddTodoForm"; //import AddTodoForm
+import TodoList from "./components/TodoList";
+import AddTodoForm from "./components/AddTodoForm"; //import AddTodoForm
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar";
 import Contact from "./Contact";
@@ -118,7 +118,7 @@ const App = () => {
 
       const data = await response.json();
       // TodoList todoList={todoList} onRemoveTodo={removeTodo}
-      setTodoList((prevList) => prevList.filter((todo) => todo.id !== id));
+      //setTodoList((prevList) => prevList.filter((todo) => todo.id !== id));
 
       setTodoList((prevList) => [
         ...prevList,
@@ -176,12 +176,13 @@ const App = () => {
               <h1>New Todo List</h1>
 
               <p> Here you can add a new task and the time for your task:</p>
-              <form
+              <AddTodoForm onAddTodo={addTodo}/>
+              {/* <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   addTodo();
                 }}
-              >
+              > */}
                 <label>
                   Todo Title:
                   <input
@@ -204,10 +205,12 @@ const App = () => {
                 </label>
                 <br />
                 <button type="submit">Add Todo</button>
-              </form>
+              {/* </form> */}
             </div>
           }
         />
+        
+      
       </Routes>
     </Router>
   );
