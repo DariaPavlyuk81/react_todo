@@ -16,6 +16,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [taskTitle, setTaskTitle] = useState("");
   const [taskTime, setTaskTime] = useState("");
+  const [isAscending,setIsAscending] = useState(true);
 
   const accessToken = import.meta.env.VITE_AIRTABLE_API_TOKEN;
   const baseId = import.meta.env.VITE_AIRTABLE_BASE_ID;
@@ -27,7 +28,7 @@ const App = () => {
   // }/${import.meta.env.VITE_AIRTABLE_TABLE_NAME}`;
 
   const fetchData = async () => {
-    const apiUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+    const apiUrl = `https://api.airtable.com/v0/${baseId}/${tableName}?view=Grid%20view`;
     //const apiUrl = `https://api.airtable.com/v0/appuEULCWBeoHSEEt/tblnQ7ni1ciJrS3sH`;
 
     const options = {
@@ -46,11 +47,30 @@ const App = () => {
 
       console.log("Airtable API Response Data", data);
 
-      const todos = data.records.map((record) => ({
+      //ascending order
+      const sortedData =data.records.sort((a,b) => {
+        const titleA = a.fields.title ? a.fields.title.toLowerCase() : '';
+        const titleB = b.fields.title ? b.fields.title.toLowerCase() : '';
+
+        if (isAscending){
+          return titleA < titleB ? -1 : titleA >titleB ? 1:0;
+        }else{
+          return titleA<titleB ?1: titleA > titleB ? -1 :0;
+        }
+
+      });
+
+
+      const todos = sortedData.map((record) => ({
         title: record.fields.title,
         id: record.id,
         task_time: record.fields.task_time || "",
       }));
+      // const todos = data.records.map((record) => ({
+      //   title: record.fields.title,
+      //   id: record.id,
+      //   task_time: record.fields.task_time || "",
+      // }));
 
       setTodoList(todos);
       setIsLoading(false);
@@ -60,6 +80,27 @@ const App = () => {
     }
   };
 
+  const toggleSortOrder = () => {
+    setIsAscending(prevState => {
+      const newState = !prevState;
+      return newState;
+    });
+  };
+
+  useEffect(()=>{
+    fetchData();
+  },[isAscending]);
+
+  // return(
+  //   <div>
+  //     <button onClick={toggleSortOrder}>
+  //       Sort {isAscending ? "Descending" : "Ascending"}
+  //     </button>
+  //     <h1>ToDo List</h1>
+  //     {isLoading ? <p>Loading...</p>:<TodoList todoList={todoList}/>}
+  //     <AddTodoForm onAddTodo={addTodo}/>
+  //   </div>
+  // )
   const removeTodo = async (id) => {
     const apiUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${id}`;
 
@@ -109,6 +150,7 @@ const App = () => {
         body: JSON.stringify({
           fields: {
             title: newTodo.title,
+            task_time:newTodo.task_time,
           },
         }),
       });
@@ -122,7 +164,7 @@ const App = () => {
 
       setTodoList((prevList) => [
         ...prevList,
-        { title: data.fields.title, id: data.id },
+        { title: data.fields.title, id: data.id,task_time: data.fields.task_time},
       ]);
     } catch (error) {
       console.error("Error adding todo:", error);
@@ -132,6 +174,7 @@ const App = () => {
   const handleTitleChange = (event) => {
     setTaskTitle(event.target.value);
   };
+
   const handleTimeChange = (event) => {
     setTaskTime(event.target.value);
   };
@@ -141,9 +184,9 @@ const App = () => {
     alert(`Time set for this task:${taskTime}`);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <Router>
@@ -153,7 +196,19 @@ const App = () => {
         <Route
           path="/"
           element={
-            <div key={todoList.length}>
+            <div>
+              <button onClick={toggleSortOrder}
+              style={{
+                position:'absolute',
+                top: '15px',
+                left: '10px',
+                zIndex:9999,
+                backgroundColor: 'lightblue',
+                padding: '10px',
+                }}
+              >
+                Sort {isAscending ? "A-Z" : "Z-A"}
+                </button>
               <h1>ToDo List</h1>
               {/* Conditional loading message */}
               {isLoading ? (
@@ -173,16 +228,20 @@ const App = () => {
           path="/new"
           element={
             <div>
-              <h1>New Todo List</h1>
-
-              <p> Here you can add a new task and the time for your task:</p>
+              <h1>New Todo</h1>
+<form onSubmit={(e) => {
+  e.preventDefault();
+  addTodo({title:taskTitle,task_time: taskTime});
+}}
+>
+              {/* <p> Here you can add a new task and the time for your task:</p>
               <AddTodoForm onAddTodo={addTodo}/>
               {/* <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   addTodo();
-                }}
-              > */}
+                }} */}
+            
                 <label>
                   Todo Title:
                   <input
@@ -205,7 +264,7 @@ const App = () => {
                 </label>
                 <br />
                 <button type="submit">Add Todo</button>
-              {/* </form> */}
+              </form> 
             </div>
           }
         />
