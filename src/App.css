@@ -82,6 +82,8 @@ button {
   border-radius: 5px;
   font-size: 1.2em;
   cursor: pointer;
+  display: inline-block;
+  visibility: visible;
 }
 
 button:hover {
