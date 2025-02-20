@@ -1,10 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
+
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const [isOpen,setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isOpen ? "open" : ""}`}>
+      <div className="hamburger" onClick={toggleNavbar}>
+      &#9776;
+      </div>
+
+
       <ul>
         <li>
           <Link to="/">Home</Link>
