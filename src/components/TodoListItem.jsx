@@ -32,9 +32,7 @@ const TodoListItem = ({ todo, onRemoveTodo,onToggleComplete }) => {
       <button
         className={styles.removeButton}
         type="button"
-        onClick={() => {
-          
-          onRemoveTodo(todo.id)}
+        onClick={() => onRemoveTodo(todo.id)}
           >
         {/* <i className="fas fa-trash"></i>Remove */}
         &#x1F5D1;
