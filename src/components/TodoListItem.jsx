@@ -19,18 +19,21 @@ import PropTypes from "prop-types";
 //     );
 // };
 
-const TodoListItem = ({ todo, onRemoveTodo }) => {
+const TodoListItem = ({ todo, onRemoveTodo,onToggleComplete }) => {
   return (
     <li className={styles.ListItem}>
-      {todo.title} -{todo.task_time && `Time: ${todo.task_time}`}
+      <input
+      type="checkbox"
+      checked={todo.completed}
+      onChange={() => onToggleComplete(todo.id)}
+      />
+      {todo.title} 
+      {todo.completed && <span> </span>}
       <button
         className={styles.removeButton}
         type="button"
-        onClick={() => {
-          console.log("Removing todo with id:", todo.id);
-          onRemoveTodo(todo.id);
-        }}
-      >
+        onClick={() => onRemoveTodo(todo.id)}
+          >
         {/* <i className="fas fa-trash"></i>Remove */}
         &#x1F5D1;
       </button>
@@ -41,10 +44,10 @@ const TodoListItem = ({ todo, onRemoveTodo }) => {
 TodoListItem.propTypes = {
   todo: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
   
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onRemoveTodo: PropTypes.func.isRequired,
 };
 
 export default TodoListItem;

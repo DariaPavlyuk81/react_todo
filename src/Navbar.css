@@ -1,16 +1,21 @@
 .navbar {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right:10px;
   background-color: #efc6c6;
   padding: 10px;
   border-radius: 8px;
+  z-index: 1000;
+  width:auto;
+  max-width: 100%;
 }
 
 .navbar ul {
   list-style: none;
   display: flex;
   gap: 15px;
+  padding:0;
+  margin:0;
 }
 
 .navbar li {
@@ -25,3 +30,52 @@
 .navbar a:hover {
   color: #ebe0cf; /* You can change the hover color */
 }
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+
+}
+
+.navbar a:hover{
+  color: rgb(215, 227, 250);
+}
+
+.hamburger{
+  display: none;
+  font-size: 30px;
+  color:white;
+  cursor:pointer;
+}
+@media (max-width: 768px) {
+  .navbar ul {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    background-color: #efc6c6;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .navbar.open ul {
+    display: flex;
+  }
+
+  .navbar li {
+    font-size: 22px;
+    padding:10px 0;
+  }
+  .hamburger{
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  .navbar.open .hamburger {
+    display:none;
+  }
+  }
