@@ -15,7 +15,7 @@ const App = () => {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [taskTitle, setTaskTitle] = useState("");
-  const [taskTime, setTaskTime] = useState("");
+  const [task_time, setTaskTime] = useState("");
   const [isAscending,setIsAscending] = useState(true);
 
   const accessToken = import.meta.env.VITE_AIRTABLE_API_TOKEN;
@@ -26,7 +26,8 @@ const App = () => {
   // const apiUrl = `https://api.airtable.com/v0/${
   //   import.meta.env.VITE_AIRTABLE_BASE_ID
   // }/${import.meta.env.VITE_AIRTABLE_TABLE_NAME}`;
-
+  console.log ("API Token:", import.meta.env.VITE_AIRTABLE_API_TOKEN);
+console.log("baseId:",baseId,"tableName:",tableName);
   const fetchData = async () => {
     const apiUrl = `https://api.airtable.com/v0/${baseId}/${tableName}?view=Grid%20view`;
     //const apiUrl = `https://api.airtable.com/v0/appuEULCWBeoHSEEt/tblnQ7ni1ciJrS3sH`;
@@ -181,7 +182,7 @@ const App = () => {
 
   const handleTimeSubmit = (event) => {
     event.preventDefault();
-    alert(`Time set for this task:${taskTime}`);
+    alert(`Time set for this task:${task_time}`);
   };
 
   // useEffect(() => {
@@ -257,7 +258,7 @@ const App = () => {
                   Time (in hours and minutes):
                   <input
                     type="time"
-                    value={taskTime}
+                    value={task_time}
                     onChange={handleTimeChange}
                     required
                   />
